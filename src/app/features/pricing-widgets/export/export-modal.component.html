@@ -1,0 +1,82 @@
+<div class="export-modal-overlay" 
+     (click)="onCloseModal()"
+     (keydown.escape)="onCloseModal()"
+     tabindex="0"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="export-modal-title">
+  <div class="export-modal" (click)="$event.stopPropagation()" (keydown.escape)="onCloseModal()" tabindex="0">
+    <div class="modal-header">
+      <h2 id="export-modal-title">Export Widget</h2>
+      <button class="btn btn-close" (click)="onCloseModal()">×</button>
+    </div>
+
+    <div class="modal-content">
+      <div class="export-tabs">
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab() === 'html'"
+          (click)="setActiveTab('html')">
+          HTML Export
+        </button>
+        <button 
+          class="tab-button" 
+          [class.active]="activeTab() === 'json'"
+          (click)="setActiveTab('json')">
+          JSON Export
+        </button>
+      </div>
+
+      <div class="export-content">
+        <div *ngIf="activeTab() === 'html'" class="html-export">
+          <div class="export-description">
+            <p>Copy this clean, semantic HTML to use in your website. It includes all styling and is framework-agnostic.</p>
+          </div>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span>HTML Code</span>
+              <button class="btn btn-sm btn-primary" (click)="copyHtml()">
+                Copy HTML
+              </button>
+            </div>
+            <pre class="code-block"><code>{{ exportHtml() }}</code></pre>
+          </div>
+        </div>
+
+        <div *ngIf="activeTab() === 'json'" class="json-export">
+          <div class="export-description">
+            <p>Download the complete widget configuration as JSON. You can import this back into the builder later.</p>
+          </div>
+          
+          <div class="code-container">
+            <div class="code-header">
+              <span>JSON Configuration</span>
+              <div class="button-group">
+                <button class="btn btn-sm btn-outline" (click)="copyJson()">
+                  Copy JSON
+                </button>
+                <button class="btn btn-sm btn-primary" (click)="downloadJson()">
+                  Download JSON
+                </button>
+              </div>
+            </div>
+            <pre class="code-block"><code>{{ exportJson() }}</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="onCloseModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div *ngIf="showToast()" class="toast-notification">
+    <div class="toast-content">
+      <span class="toast-icon">✓</span>
+      <span class="toast-message">{{ toastMessage() }}</span>
+    </div>
+  </div>
+</div>

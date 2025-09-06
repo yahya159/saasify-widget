@@ -1,0 +1,97 @@
+<div class="tier-editor">
+  <div class="header">
+    <h2>{{ tier()?.name || 'Edit Tier' }}</h2>
+    <button class="btn btn-close" (click)="onCloseEditor()">×</button>
+  </div>
+
+  <form [formGroup]="tierForm" class="tier-form">
+    <div class="form-section">
+      <h3>Tier Details</h3>
+      
+      <div class="form-group">
+        <label for="tier-name">Tier Name</label>
+        <input 
+          id="tier-name"
+          type="text" 
+          formControlName="name" 
+          placeholder="e.g., Basic, Pro, Enterprise"
+          [class.error]="tierForm.get('name')?.invalid && tierForm.get('name')?.touched"
+        >
+        <div *ngIf="tierForm.get('name')?.invalid && tierForm.get('name')?.touched" class="error-message">
+          Tier name is required
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="monthly-price">Monthly Price</label>
+          <input 
+            id="monthly-price"
+            type="number" 
+            formControlName="monthlyPrice" 
+            min="0"
+            step="0.01"
+            [class.error]="tierForm.get('monthlyPrice')?.invalid && tierForm.get('monthlyPrice')?.touched"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="yearly-price">Yearly Price (Optional)</label>
+          <input 
+            id="yearly-price"
+            type="number" 
+            formControlName="yearlyPrice" 
+            min="0"
+            step="0.01"
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="currency">Currency</label>
+        <select id="currency" formControlName="currency">
+          <option *ngFor="let currency of currencies" [value]="currency">
+            {{ currency }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="cta-label">Call-to-Action Label</label>
+        <input 
+          id="cta-label"
+          type="text" 
+          formControlName="ctaLabel" 
+          placeholder="e.g., Get Started, Contact Sales"
+        >
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="highlight">
+          <span class="checkmark"></span>
+          Highlight this tier (Popular, Recommended, etc.)
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Features & Limits</h3>
+      <app-feature-selector
+        [tier]="tier()"
+        [planId]="planId()"
+        (featureToggled)="toggleFeature($event)"
+        (limitChanged)="setFeatureLimit($event.featureKey, $event.limit)">
+      </app-feature-selector>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCloseEditor()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary" (click)="saveTier()" [disabled]="!tierForm.valid">
+        Save Tier
+      </button>
+    </div>
+  </form>
+</div>

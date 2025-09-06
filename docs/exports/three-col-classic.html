@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Column Classic Pricing Widget</title>
+    <style>
+        /* Optional minimal CSS for enhanced styling */
+        .pricing-widget {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .pricing-card {
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 24px;
+            background: #fff;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-card--highlighted {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card__title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 16px 0;
+            color: #212529;
+        }
+        
+        .pricing-card__price {
+            margin: 24px 0;
+        }
+        
+        .pricing-card__amount {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #007bff;
+        }
+        
+        .pricing-card__period {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+            text-align: left;
+        }
+        
+        .pricing-feature {
+            padding: 8px 0;
+            border-bottom: 1px solid #f8f9fa;
+            position: relative;
+            padding-left: 24px;
+        }
+        
+        .pricing-feature:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .pricing-feature:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-button {
+            width: 100%;
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .pricing-button:hover {
+            background: #0056b3;
+        }
+        
+        .pricing-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .pricing-headline {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            color: #212529;
+        }
+        
+        .pricing-subtext {
+            text-align: center;
+            font-size: 1.125rem;
+            color: #6c757d;
+            margin: 0 0 48px 0;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .pricing-columns {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+            
+            .pricing-card--highlighted {
+                transform: none;
+            }
+            
+            .pricing-headline {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pricing Widget - Framework Agnostic HTML Export -->
+    <section class="pricing-widget" role="region" aria-label="Pricing">
+        <div class="pricing-container" style="max-width: 1200px; margin: 0 auto; padding: 0 16px;">
+            <div class="pricing-columns" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start;">
+                <div class="pricing-column" role="listitem" aria-label="Pricing column">
+                    <h2 class="pricing-headline" style="text-align: center; font-size: 2.5rem; font-weight: 700; margin: 0 0 16px 0; color: #212529;">Choose Your Perfect Plan</h2>
+                    <p class="pricing-subtext" style="text-align: center; font-size: 1.125rem; color: #6c757d; margin: 0 0 48px 0;">Select the plan that fits your needs and start building amazing projects today.</p>
+                </div>
+                <div class="pricing-column" role="listitem" aria-label="Pricing column">
+                    <article class="pricing-card" style="border: 1px solid #e1e5e9; border-radius: 8px; padding: 24px; background: #fff; text-align: center;">
+                        <header class="pricing-card__header">
+                            <h3 class="pricing-card__title">Basic</h3>
+                        </header>
+                        <div class="pricing-card__price">
+                            <span class="pricing-card__amount">$29</span>
+                            <span class="pricing-card__period">/month</span>
+                        </div>
+                        <div class="pricing-card__features">
+                            <ul class="pricing-features">
+                                <li class="pricing-feature">Up to 5 projects</li>
+                                <li class="pricing-feature">10GB storage</li>
+                                <li class="pricing-feature">Email support</li>
+                                <li class="pricing-feature">Basic analytics</li>
+                            </ul>
+                        </div>
+                        <footer class="pricing-card__footer">
+                            <button class="pricing-button pricing-button--primary" type="button">
+                                Get Started
+                            </button>
+                        </footer>
+                    </article>
+                </div>
+                <div class="pricing-column" role="listitem" aria-label="Pricing column">
+                    <article class="pricing-card pricing-card--highlighted" style="border: 1px solid #007bff; border-radius: 8px; padding: 24px; background: #fff; text-align: center; box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);">
+                        <header class="pricing-card__header">
+                            <h3 class="pricing-card__title">Pro</h3>
+                            <span class="pricing-badge">Popular</span>
+                        </header>
+                        <div class="pricing-card__price">
+                            <span class="pricing-card__amount">$99</span>
+                            <span class="pricing-card__period">/month</span>
+                        </div>
+                        <div class="pricing-card__features">
+                            <ul class="pricing-features">
+                                <li class="pricing-feature">Unlimited projects</li>
+                                <li class="pricing-feature">100GB storage</li>
+                                <li class="pricing-feature">Priority support</li>
+                                <li class="pricing-feature">Advanced analytics</li>
+                                <li class="pricing-feature">Custom integrations</li>
+                            </ul>
+                        </div>
+                        <footer class="pricing-card__footer">
+                            <button class="pricing-button pricing-button--primary" type="button">
+                                Get Started
+                            </button>
+                        </footer>
+                    </article>
+                </div>
+                <div class="pricing-column" role="listitem" aria-label="Pricing column">
+                    <article class="pricing-card" style="border: 1px solid #e1e5e9; border-radius: 8px; padding: 24px; background: #fff; text-align: center;">
+                        <header class="pricing-card__header">
+                            <h3 class="pricing-card__title">Enterprise</h3>
+                        </header>
+                        <div class="pricing-card__price">
+                            <span class="pricing-card__amount">$299</span>
+                            <span class="pricing-card__period">/month</span>
+                        </div>
+                        <div class="pricing-card__features">
+                            <ul class="pricing-features">
+                                <li class="pricing-feature">Everything in Pro</li>
+                                <li class="pricing-feature">Unlimited storage</li>
+                                <li class="pricing-feature">24/7 phone support</li>
+                                <li class="pricing-feature">Custom reporting</li>
+                                <li class="pricing-feature">Dedicated account manager</li>
+                                <li class="pricing-feature">SLA guarantee</li>
+                            </ul>
+                        </div>
+                        <footer class="pricing-card__footer">
+                            <button class="pricing-button pricing-button--primary" type="button">
+                                Contact Sales
+                            </button>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Pricing Widget -->
+</body>
+</html>

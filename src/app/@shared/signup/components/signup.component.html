@@ -1,0 +1,72 @@
+<div class="parent">
+  <form class="child" [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm)">
+    <p class="title">Create an account</p>
+
+    <div class="name">
+      <p> name </p>
+      <div>
+        <div class="label">
+          <input type="text" formControlName="username" id="username" aria-describedby="username-error">
+          <div class="popup" [class.show]="invalidFields['username']" id="username-error">username is not valid!</div>
+          <label for="username">Username</label>
+        </div>
+      </div>
+      <div>
+        <div class="label">
+          <input type="text" formControlName="firstname" id="firstname" aria-describedby="firstname-error">
+          <div class="popup" [class.show]="invalidFields['firstname']" id="firstname-error">firstname is not valid!</div>
+          <label for="firstname">First Name</label>
+        </div>
+        <div class="label">
+          <input type="text" formControlName="lastname" id="lastname" aria-describedby="lastname-error">
+          <div class="popup" [class.show]="invalidFields['lastname']" id="lastname-error">lastname is not valid!</div>
+          <label for="lastname">Last Name</label>
+        </div>
+      </div>
+    </div>
+    <div class="email">
+      <p> Email </p>
+      <input type="email" formControlName="email" id="email" aria-describedby="email-error">
+      <div class="popup" [class.show]="invalidFields['email']" id="email-error">email is not valid!</div>
+      <label for="email">example&#64;example.com</label>
+    </div>
+    <div class="phone">
+      <p> Phone Number </p>
+      <input type="tel" placeholder="(000) 000-000" formControlName="phone" id="phone" aria-describedby="phone-error">
+      <div class="popup" [class.show]="invalidFields['phone']" id="phone-error">phone is not valid!</div>
+    </div>
+    <div class="address">
+      <p> Address </p>
+      <div class="label">
+        <input type="text" formControlName="streetAddr" id="streetAddr" aria-describedby="streetAddr-error">
+        <div class="popup" [class.show]="invalidFields['streetAddr']" id="streetAddr-error">streetAddr is not valid!</div>
+        <label for="streetAddr">Street Address</label>
+      </div>
+      <div class="label">
+        <input type="text" formControlName="streetAddr2" id="streetAddr2" aria-describedby="streetAddr2-error">
+        <div class="popup" [class.show]="invalidFields['streetAddr2']" id="streetAddr2-error">streetAddr2 is not valid!</div>
+        <label for="streetAddr2">Street Address Line 2</label>
+      </div>
+      <div>
+        <div class="label">
+          <input type="text" formControlName="city" id="city" aria-describedby="city-error">
+          <div class="popup" [class.show]="invalidFields['city']" id="city-error">city is not valid!</div>
+          <label for="city">City</label>
+        </div>
+        <div class="label">
+          <input type="text" formControlName="state" id="state" aria-describedby="state-error">
+          <div class="popup" [class.show]="invalidFields['state']" id="state-error">state is not valid!</div>
+          <label for="state">State / Province</label>
+        </div>
+      </div>
+      <div>
+        <input type="text" formControlName="zipCode" id="zipCode" aria-describedby="zipCode-error">
+        <div class="popup" [class.show]="invalidFields['zipCode']" id="zipCode-error">zipCode is not valid!</div>
+      </div>
+      <label for="zipCode">Postal / Zip Code</label>
+    </div>
+    <div class="submit">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+</div>

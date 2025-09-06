@@ -1,0 +1,139 @@
+<div class="canvas">
+  <!-- Live region for screen reader announcements -->
+  <div aria-live="polite" aria-atomic="true" class="sr-only">
+    {{ liveRegionMessage() }}
+  </div>
+
+  <div *ngIf="!selectedWidget()" class="no-widget">
+    <div class="no-widget-content">
+      <h2>No widget selected</h2>
+      <p>Create a new widget or select an existing one to start building</p>
+    </div>
+  </div>
+
+  <div *ngIf="selectedWidget()" class="widget-canvas">
+    <div class="canvas-header">
+      <h3>{{ selectedWidget()!.name }}</h3>
+      <div class="canvas-actions">
+        <button class="btn btn-sm btn-outline" (click)="addColumn()">
+          + Add Column
+        </button>
+      </div>
+    </div>
+
+    <section class="widget-container" 
+             [style]="getWidgetStyle()"
+             role="region" 
+             aria-label="Pricing widget builder canvas">
+      <ul class="widget-columns" 
+          [style.display]="'grid'"
+          [style.grid-template-columns]="'repeat(' + selectedWidget()!.columns.length + ', 1fr)'"
+          [style.gap]="selectedWidget()!.style?.gap + 'px' || '16px'"
+          role="list"
+          aria-label="Widget columns">
+        
+        <li *ngFor="let column of selectedWidget()!.columns" 
+            class="widget-column"
+            [style]="getColumnStyle(column)"
+            cdkDropList
+            [cdkDropListData]="column.blocks"
+            [id]="column.id"
+            [cdkDropListConnectedTo]="getConnectedDropLists()"
+            (cdkDropListDropped)="onDrop($event)"
+            role="listitem"
+            [attr.aria-label]="'Column ' + (column.order + 1) + ' with ' + column.blocks.length + ' blocks'">
+          
+          <div class="column-header">
+            <span class="column-title">Column {{ column.order + 1 }}</span>
+            <div class="column-actions">
+              <select (change)="onColumnWidthChange(column.id, $event)" [value]="column.widthFraction">
+                <option value="1">1/12</option>
+                <option value="2">2/12</option>
+                <option value="3">3/12</option>
+                <option value="4">4/12</option>
+                <option value="6">6/12</option>
+                <option value="12">12/12</option>
+              </select>
+              <button class="btn btn-sm btn-danger" (click)="deleteColumn(column.id)">
+                Delete
+              </button>
+            </div>
+          </div>
+
+          <div class="column-content">
+            <article *ngFor="let block of column.blocks; trackBy: trackByBlockId" 
+                     class="widget-block"
+                     [class.selected]="selectedBlockId() === block.id"
+                     [style]="getBlockStyle(block)"
+                     cdkDrag
+                     [cdkDragData]="block"
+                     (cdkDragStarted)="onDragStarted()"
+                     (cdkDragEnded)="onDragEnded()"
+                     (click)="selectBlock(block.id)"
+                     (keydown.enter)="selectBlock(block.id); openProperties()"
+                     (keydown.space)="selectBlock(block.id)"
+                     tabindex="0"
+                     role="button"
+                     [attr.aria-label]="'Select and drag ' + block.type + ' block. ' + (block.text || 'No text content')"
+                     [attr.aria-describedby]="'block-' + block.id + '-description'">
+              
+              <!-- Drag Handle -->
+              <div class="drag-handle" 
+                   cdkDragHandle
+                   [attr.aria-label]="'Drag handle for ' + block.type + ' block'"
+                   title="Drag to move block">
+                <span class="drag-icon" aria-hidden="true">⋮⋮</span>
+              </div>
+
+              <div class="block-content">
+                <app-price-card 
+                  *ngIf="block.type === 'price-card'" 
+                  [block]="block"
+                  [plan]="getAttachedPlan()">
+                </app-price-card>
+                
+                <app-feature-list 
+                  *ngIf="block.type === 'feature-list'" 
+                  [block]="block"
+                  [plan]="getAttachedPlan()">
+                </app-feature-list>
+                
+                <div *ngIf="block.type === 'headline'" class="block-headline">
+                  <h2>{{ block.text || 'Your Headline' }}</h2>
+                </div>
+                
+                <div *ngIf="block.type === 'subtext'" class="block-subtext">
+                  <p>{{ block.text || 'Your subtext here' }}</p>
+                </div>
+                
+                <div *ngIf="block.type === 'badge'" class="block-badge">
+                  <span class="badge">{{ block.text || 'Badge' }}</span>
+                </div>
+                
+                <div *ngIf="block.type === 'divider'" class="block-divider">
+                  <hr>
+                </div>
+              </div>
+
+              <div class="block-actions">
+                <button class="btn btn-sm btn-danger" 
+                        (click)="deleteBlock(block.id); $event.stopPropagation()"
+                        [attr.aria-label]="'Delete ' + block.type + ' block'">
+                  Delete
+                </button>
+              </div>
+              
+              <div [id]="'block-' + block.id + '-description'" class="sr-only">
+                {{ block.type }} block with {{ block.text ? 'text content' : 'no text content' }}
+              </div>
+            </article>
+
+            <div *ngIf="column.blocks.length === 0" class="empty-column">
+              <p>Drop blocks here</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

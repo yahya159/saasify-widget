@@ -1,0 +1,37 @@
+<div class="template-gallery">
+  <div class="template-option blank-template" 
+       (click)="createBlankWidget()"
+       (keydown.enter)="createBlankWidget()"
+       (keydown.space)="createBlankWidget()"
+       tabindex="0"
+       role="button"
+       aria-label="Create blank widget from scratch">
+    <div class="template-preview blank-preview">
+      <div class="preview-placeholder">
+        <span>+</span>
+        <p>Start from scratch</p>
+      </div>
+    </div>
+    <h4>Blank Widget</h4>
+    <p>Create a custom widget from scratch</p>
+  </div>
+
+  <div *ngFor="let template of templates()" 
+       class="template-option" 
+       (click)="createFromTemplate(template.id)"
+       (keydown.enter)="createFromTemplate(template.id)"
+       (keydown.space)="createFromTemplate(template.id)"
+       tabindex="0"
+       role="button"
+       [attr.aria-label]="'Create widget from ' + template.name + ' template'">
+    <div class="template-preview">
+      <app-template-thumbnail 
+        [templateName]="template.name"
+        [templateType]="getTemplateType(template.name)"
+        [imageSrc]="getTemplateImage(template.name)">
+      </app-template-thumbnail>
+    </div>
+    <h4>{{ template.name }}</h4>
+    <p>{{ getTemplateDescription(template) }}</p>
+  </div>
+</div>

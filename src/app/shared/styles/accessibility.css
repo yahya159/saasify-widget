@@ -1,0 +1,220 @@
+/* Accessibility Styles - WCAG AA Compliant */
+
+/* High contrast focus indicators */
+*:focus {
+  outline: 2px solid var(--accent-color, #007bff);
+  outline-offset: 2px;
+}
+
+/* Remove default focus outline and use custom */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Enhanced focus for interactive elements */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-color, #007bff);
+  outline-offset: 2px;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 102, 204, 0.3));
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--accent-color, #007bff);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* High contrast text colors */
+.text-primary {
+  color: var(--text-primary, #212529);
+}
+
+.text-secondary {
+  color: var(--text-secondary, #495057);
+}
+
+.text-muted {
+  color: var(--text-muted, #6c757d);
+}
+
+/* Ensure sufficient contrast for links */
+a {
+  color: var(--link-color, #0066cc);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--link-hover, #004499);
+  text-decoration: none;
+}
+
+a:focus {
+  color: var(--link-hover, #004499);
+  text-decoration: underline;
+}
+
+/* Button contrast improvements */
+.btn {
+  border: 1px solid transparent;
+  font-weight: 500;
+  min-height: 44px; /* Minimum touch target size */
+  min-width: 44px;
+}
+
+.btn-primary {
+  background-color: var(--accent-color, #007bff);
+  color: white;
+  border-color: var(--accent-color, #007bff);
+}
+
+.btn-primary:hover {
+  background-color: var(--link-hover, #004499);
+  border-color: var(--link-hover, #004499);
+}
+
+.btn-secondary {
+  background-color: var(--text-secondary, #495057);
+  color: white;
+  border-color: var(--text-secondary, #495057);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--accent-color, #007bff);
+  border-color: var(--accent-color, #007bff);
+}
+
+.btn-outline:hover {
+  background-color: var(--accent-color, #007bff);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--error-color, #dc3545);
+  color: white;
+  border-color: var(--error-color, #dc3545);
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+/* Form elements with proper contrast */
+input, select, textarea {
+  border: 1px solid var(--border-color, #dee2e6);
+  background-color: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #212529);
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent-color, #007bff);
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(0, 102, 204, 0.3));
+}
+
+/* Labels with proper contrast */
+label {
+  color: var(--text-primary, #212529);
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Error states with sufficient contrast */
+.error {
+  color: var(--error-color, #dc3545);
+  border-color: var(--error-color, #dc3545);
+}
+
+.error-message {
+  color: var(--error-color, #dc3545);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+/* Success states */
+.success {
+  color: var(--success-color, #198754);
+}
+
+/* Warning states */
+.warning {
+  color: var(--warning-color, #fd7e14);
+}
+
+/* Dark mode specific adjustments */
+.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #b0b0b0;
+  --border-color: #404040;
+  --border-light: #2d2d2d;
+  --link-color: #66b3ff;
+  --link-hover: #99ccff;
+  --success-color: #4ade80;
+  --warning-color: #fbbf24;
+  --error-color: #f87171;
+  --focus-ring: 0 0 0 3px rgba(102, 179, 255, 0.5);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .widget-block {
+    border-width: 3px;
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+  
+  *:focus {
+    outline-width: 3px;
+  }
+}
+
+/* Print styles for accessibility */
+@media print {
+  .skip-link,
+  .drag-handle,
+  .block-actions {
+    display: none !important;
+  }
+  
+  .widget-block {
+    border: 1px solid #000 !important;
+    break-inside: avoid;
+  }
+}

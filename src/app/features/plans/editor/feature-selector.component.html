@@ -1,0 +1,48 @@
+<div class="feature-selector">
+  <div class="search-section">
+    <input 
+      type="text" 
+      placeholder="Search features..."
+      [value]="searchQuery()"
+      (input)="onSearchChange($event)"
+      class="search-input"
+    >
+  </div>
+
+  <div class="features-list">
+    <div *ngFor="let feature of filteredFeatures()" class="feature-item">
+      <div class="feature-header">
+        <label class="feature-checkbox">
+          <input 
+            type="checkbox" 
+            [checked]="isFeatureEnabled(feature.key)"
+            (change)="toggleFeature(feature.key)"
+          >
+          <span class="checkmark"></span>
+          <div class="feature-info">
+            <div class="feature-name">{{ feature.name }}</div>
+            <div class="feature-key">{{ feature.key }}</div>
+            <div *ngIf="feature.description" class="feature-description">
+              {{ feature.description }}
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div *ngIf="isFeatureEnabled(feature.key)" class="feature-limit">
+        <span class="limit-label">Limit:</span>
+        <input 
+          type="{{ getFeatureType(feature) }}"
+          [placeholder]="getFeaturePlaceholder(feature)"
+          [value]="getFeatureLimit(feature.key) || ''"
+          (input)="updateFeatureLimit(feature.key, $event)"
+          class="limit-input"
+        >
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredFeatures().length === 0" class="no-features">
+    <p>No features found matching "{{ searchQuery() }}"</p>
+  </div>
+</div>

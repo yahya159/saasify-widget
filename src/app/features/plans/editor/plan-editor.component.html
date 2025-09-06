@@ -1,0 +1,101 @@
+<div class="plan-editor">
+  <div class="header">
+    <h1>{{ isNewPlan() ? 'Create New Plan' : 'Edit Plan' }}</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+      <button class="btn btn-primary" (click)="savePlan()" [disabled]="!planForm.valid">
+        Save Plan
+      </button>
+    </div>
+  </div>
+
+  <form [formGroup]="planForm" class="plan-form">
+    <div class="form-section">
+      <h2>Plan Details</h2>
+      <div class="form-group">
+        <label for="name">Plan Name</label>
+        <input 
+          id="name"
+          type="text" 
+          formControlName="name" 
+          placeholder="Enter plan name"
+          [class.error]="planForm.get('name')?.invalid && planForm.get('name')?.touched"
+        >
+        <div *ngIf="planForm.get('name')?.invalid && planForm.get('name')?.touched" class="error-message">
+          Plan name is required and must be at least 2 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description"
+          formControlName="description" 
+          placeholder="Describe your plan"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="public">
+          <span class="checkmark"></span>
+          Make this plan public
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="section-header">
+        <h2>Pricing Tiers</h2>
+        <button type="button" class="btn btn-outline" (click)="addTier()">
+          + Add Tier
+        </button>
+      </div>
+
+      <div *ngIf="plan() && plan()!.tiers.length === 0" class="empty-tiers">
+        <p>No tiers yet. Add your first pricing tier to get started.</p>
+      </div>
+
+      <div class="tiers-container">
+        <div *ngFor="let tier of plan()?.tiers || []" class="tier-card" 
+             [class.selected]="selectedTierId() === tier.id"
+             (click)="selectTier(tier.id)"
+             (keydown.enter)="selectTier(tier.id)"
+             (keydown.space)="selectTier(tier.id)"
+             tabindex="0"
+             role="button"
+             [attr.aria-label]="'Select tier ' + tier.name">
+          <div class="tier-header">
+            <h3>{{ tier.name }}</h3>
+            <div class="tier-actions">
+              <button type="button" class="btn btn-sm btn-outline" (click)="selectTier(tier.id); $event.stopPropagation()">
+                Edit
+              </button>
+              <button type="button" class="btn btn-sm btn-secondary" (click)="duplicateTier(tier.id); $event.stopPropagation()">
+                Duplicate
+              </button>
+              <button type="button" class="btn btn-sm btn-danger" (click)="deleteTier(tier.id); $event.stopPropagation()">
+                Delete
+              </button>
+            </div>
+          </div>
+          <div class="tier-preview">
+            <div class="price">${{ tier.monthlyPrice }}/month</div>
+            <div class="features-count">{{ tier.features.length }} features</div>
+            <div *ngIf="tier.highlight" class="highlight-badge">Popular</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="selectedTierId()" class="tier-editor-panel">
+    <app-tier-editor 
+      [tier]="getSelectedTier()"
+      [planId]="plan()?.id || ''"
+      (tierUpdated)="selectTier($event)"
+      (close)="selectedTierId.set(null)">
+    </app-tier-editor>
+  </div>
+</div>

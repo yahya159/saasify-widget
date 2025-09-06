@@ -1,0 +1,71 @@
+<div class="live-preview">
+  <div class="preview-header">
+    <h4>Live Preview</h4>
+    <button class="btn btn-sm btn-outline" (click)="themeService.toggleDarkMode()">
+      {{ theme().isDarkMode ? 'Light' : 'Dark' }} Mode
+    </button>
+  </div>
+
+  <div class="preview-content" 
+       [class.dark-mode]="theme().isDarkMode"
+       [style]="cssVariables() | objectToStyle">
+    <div *ngIf="!selectedWidget()" class="no-widget">
+      <p>No widget selected for preview</p>
+    </div>
+
+    <section *ngIf="selectedWidget()" 
+             class="widget-preview" 
+             [style]="getWidgetStyle()"
+             role="region" 
+             aria-label="Pricing">
+      <ul class="widget-columns" 
+          [style.display]="'grid'"
+          [style.grid-template-columns]="'repeat(' + selectedWidget()!.columns.length + ', 1fr)'"
+          [style.gap]="selectedWidget()!.style?.gap + 'px' || '16px'"
+          role="list"
+          aria-label="Pricing columns">
+        
+        <li *ngFor="let column of selectedWidget()!.columns" 
+            class="widget-column"
+            [style]="getColumnStyle(column)"
+            role="listitem"
+            [attr.aria-label]="'Column ' + (column.order + 1) + ' with ' + column.blocks.length + ' blocks'">
+          
+          <article *ngFor="let block of getSortedBlocks(column.blocks)" 
+                   class="widget-block"
+                   [style]="getBlockStyle(block)"
+                   [attr.aria-label]="block.type + ' block' + (block.text ? ': ' + block.text : '')">
+            
+            <app-price-card 
+              *ngIf="block.type === 'price-card'" 
+              [block]="block"
+              [plan]="attachedPlan()">
+            </app-price-card>
+            
+            <app-feature-list 
+              *ngIf="block.type === 'feature-list'" 
+              [block]="block"
+              [plan]="attachedPlan()">
+            </app-feature-list>
+            
+            <div *ngIf="block.type === 'headline'" class="block-headline">
+              <h2>{{ block.text || 'Your Headline' }}</h2>
+            </div>
+            
+            <div *ngIf="block.type === 'subtext'" class="block-subtext">
+              <p>{{ block.text || 'Your subtext here' }}</p>
+            </div>
+            
+            <div *ngIf="block.type === 'badge'" class="block-badge">
+              <span class="badge">{{ block.text || 'Badge' }}</span>
+            </div>
+            
+            <div *ngIf="block.type === 'divider'" class="block-divider">
+              <hr>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>

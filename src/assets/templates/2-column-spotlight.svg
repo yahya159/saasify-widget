@@ -1,0 +1,6 @@
+<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="120" fill="#f8f9fa"/>
+  <rect x="10" y="10" width="80" height="100" fill="#e3f2fd" stroke="#1976d2" stroke-width="1"/>
+  <rect x="100" y="10" width="80" height="100" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <text x="100" y="115" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">2-Column Spotlight</text>
+</svg>

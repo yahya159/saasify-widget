@@ -1,0 +1,30 @@
+<div class="widget-builder">
+  <h1>Pricing Widget Builder</h1>
+  <p>Create and customize pricing widgets with drag-and-drop functionality.</p>
+  
+  <div class="templates-section">
+    <h2>Available Templates ({{ mockApi.templates().length }})</h2>
+    <div *ngFor="let template of mockApi.templates()" class="template-card">
+      <div>
+        <h3>{{ template.name }}</h3>
+        <p>{{ template.columns.length }} columns</p>
+      </div>
+      <button (click)="createWidget(template.id)">Use Template</button>
+    </div>
+  </div>
+  
+  <div class="widgets-section">
+    <h2>Your Widgets ({{ mockApi.widgets().length }})</h2>
+    <div *ngFor="let widget of mockApi.widgets()" class="widget-card">
+      <div>
+        <h3>{{ widget.name }}</h3>
+        <p>Template: {{ getTemplateName(widget.templateId) }}</p>
+        <p>Columns: {{ widget.columns.length }}</p>
+      </div>
+      <div>
+        <button (click)="editWidget(widget.id)">Edit</button>
+        <button (click)="deleteWidget(widget.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

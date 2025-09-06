@@ -1,0 +1,125 @@
+/* popup */
+
+
+.popup {
+  visibility: hidden;
+  position: absolute;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  z-index: 10;
+  transform: translateY(-100%);
+  margin-top: -5px;
+}
+
+.popup.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* */
+
+/* first container */
+.parent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100wh;
+}
+
+/* form container */
+.child {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 100px repeat(50px, 1fr) 400px 50px;
+  grid-column-gap: 0px;
+  grid-row-gap: 7px;
+  width: 40%;
+  min-width: 400px;
+  max-width: 450px;
+}
+
+/* title container */
+.title {
+  grid-area: 1 / 1 / 2 / 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* name inputs */
+.name {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.name>div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* email inputs */
+.email {
+  grid-area: 3 / 1 / 4 / 2;
+  width: 100%;
+}
+
+.email>input {
+  width: 100%;
+}
+
+/* phone inputs */
+.phone {
+  grid-area: 4 / 1 / 5 / 2;
+  width: 100%;
+}
+
+.phone>input {
+  width: 100%;
+}
+
+/* address inputs */
+.address {
+  grid-area: 5 / 1 / 6 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.address>div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+
+/* sbmit button */
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: 6 / 1 / 7 / 2;
+}
+
+
+/* styling labels */
+.label {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #333939;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}

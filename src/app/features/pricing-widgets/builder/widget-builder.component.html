@@ -1,0 +1,80 @@
+<div class="widget-builder" id="main-content">
+  <header class="builder-header">
+    <div class="header-left">
+      <h1>Pricing Widget Builder</h1>
+      <div class="widget-selector">
+        <select (change)="onWidgetSelect($event)" [value]="selectedWidget()?.id || ''">
+          <option value="">Select a widget...</option>
+          <option *ngFor="let widget of widgets()" [value]="widget.id">
+            {{ widget.name }}
+          </option>
+        </select>
+        <div class="widget-actions">
+          <button class="btn btn-primary" (click)="createNewWidget()">
+            + New Widget
+          </button>
+          <button class="btn btn-outline" 
+                  (click)="editWidgetName()" 
+                  [disabled]="!selectedWidget()"
+                  title="Edit widget name">
+            ✏️ Edit
+          </button>
+          <button class="btn btn-danger" 
+                  (click)="deleteWidget()" 
+                  [disabled]="!selectedWidget()"
+                  title="Delete widget">
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-secondary" (click)="togglePreview()">
+        {{ showPreview() ? 'Hide Preview' : 'Show Preview' }}
+      </button>
+      <button class="btn btn-primary" (click)="openExportModal()" [disabled]="!selectedWidget()">
+        Export
+      </button>
+    </div>
+  </header>
+
+  <div class="builder-content" [class.with-preview]="showPreview()">
+    <aside class="left-sidebar">
+      <div class="sidebar-section">
+        <h3>Templates</h3>
+        <app-template-gallery></app-template-gallery>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>Blocks</h3>
+        <app-palette></app-palette>
+      </div>
+    </aside>
+
+    <main class="canvas-area">
+      <app-canvas></app-canvas>
+    </main>
+
+    <aside class="right-sidebar">
+      <div class="sidebar-section">
+        <h3>Theme</h3>
+        <app-theme-switcher></app-theme-switcher>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>Properties</h3>
+        <app-properties-panel></app-properties-panel>
+      </div>
+    </aside>
+
+    <div *ngIf="showPreview()" class="preview-panel">
+      <h3>Live Preview</h3>
+      <app-live-preview></app-live-preview>
+    </div>
+  </div>
+
+  <app-export-modal 
+    *ngIf="showExportModal()"
+    (closeModal)="closeExportModal()">
+  </app-export-modal>
+</div>

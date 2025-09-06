@@ -1,0 +1,20 @@
+<div class="palette" cdkDropList id="palette" [cdkDropListData]="[]">
+  <div *ngFor="let blockType of blockTypes" 
+       class="palette-item"
+       cdkDrag
+       [cdkDragData]="blockType.type"
+       (cdkDragStarted)="onDragStarted()"
+       (cdkDragEnded)="onDragEnded()"
+       [attr.aria-label]="'Drag ' + blockType.label + ' block to add to widget'"
+       tabindex="0"
+       role="button">
+    <div class="palette-item-content">
+      <div class="block-icon" aria-hidden="true">{{ blockType.icon }}</div>
+      <div class="block-info">
+        <h4>{{ blockType.label }}</h4>
+        <p>{{ blockType.description }}</p>
+      </div>
+      <div class="drag-handle" aria-hidden="true">⋮⋮</div>
+    </div>
+  </div>
+</div>

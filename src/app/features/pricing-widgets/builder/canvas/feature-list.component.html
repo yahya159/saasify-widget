@@ -1,0 +1,21 @@
+<div class="feature-list">
+  <h4 class="feature-list-title">Features</h4>
+  <ul class="features">
+    <li *ngFor="let feature of getTierFeatures()" class="feature-item">
+      <div class="feature-content">
+        <span class="feature-icon">✓</span>
+        <span class="feature-name">{{ feature.name }}</span>
+        <span *ngIf="getFeatureLimit(feature.key)" class="feature-limit">
+          {{ getFeatureLimit(feature.key) }}
+        </span>
+      </div>
+      <div *ngIf="feature.description" class="feature-description">
+        {{ feature.description }}
+      </div>
+    </li>
+  </ul>
+  
+  <div *ngIf="getTierFeatures().length === 0" class="no-features">
+    <p>No features available</p>
+  </div>
+</div>

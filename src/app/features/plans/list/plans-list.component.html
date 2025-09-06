@@ -1,0 +1,54 @@
+<div class="plans-list">
+  <div class="header">
+    <h1>Plans & Features Dashboard</h1>
+    <button class="btn btn-primary" (click)="createPlan()">
+      + Create New Plan
+    </button>
+  </div>
+
+  <div class="plans-grid">
+    <div *ngFor="let plan of plans()" class="plan-card">
+      <div class="plan-header">
+        <h3>{{ plan.name }}</h3>
+        <div class="plan-badges">
+          <span [class]="plan.public ? 'badge badge-public' : 'badge badge-private'">
+            {{ plan.public ? 'Public' : 'Private' }}
+          </span>
+        </div>
+      </div>
+      
+      <p class="plan-description">{{ plan.description }}</p>
+      
+      <div class="plan-stats">
+        <div class="stat">
+          <span class="stat-label">Tiers:</span>
+          <span class="stat-value">{{ plan.tiers.length }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Features:</span>
+          <span class="stat-value">{{ getTotalFeatures(plan) }}</span>
+        </div>
+      </div>
+
+      <div class="plan-actions">
+        <button class="btn btn-secondary" (click)="editPlan(plan.id)">
+          Edit
+        </button>
+        <button class="btn btn-outline" (click)="duplicatePlan(plan.id)">
+          Duplicate
+        </button>
+        <button class="btn btn-danger" (click)="deletePlan(plan.id)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="plans().length === 0" class="empty-state">
+    <h2>No plans yet</h2>
+    <p>Create your first pricing plan to get started.</p>
+    <button class="btn btn-primary" (click)="createPlan()">
+      Create Your First Plan
+    </button>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="price-card" [class.highlighted]="isHighlighted()">
+  <div class="card-header">
+    <h3 class="tier-name">{{ getTier()?.name || 'Tier Name' }}</h3>
+    <div *ngIf="isHighlighted()" class="highlight-badge">Popular</div>
+  </div>
+  
+  <div class="card-price">
+    <span class="price-amount">{{ getPrice() }}</span>
+  </div>
+  
+  <div class="card-cta">
+    <button class="cta-button">{{ getCtaLabel() }}</button>
+  </div>
+</div>

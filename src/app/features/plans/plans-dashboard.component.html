@@ -1,0 +1,27 @@
+<div class="plans-dashboard">
+  <h1>Plans & Features Dashboard</h1>
+  <p>Manage your pricing plans and features here.</p>
+  
+  <div class="features-section">
+    <h2>Features ({{ mockApi.features().length }})</h2>
+    <ul>
+      <li *ngFor="let feature of mockApi.features()">
+        {{ feature.name }} - {{ feature.key }}
+      </li>
+    </ul>
+  </div>
+  
+  <div class="plans-section">
+    <h2>Plans ({{ mockApi.plans().length }})</h2>
+    <div *ngFor="let plan of mockApi.plans()" class="plan-card">
+      <h3>{{ plan.name }}</h3>
+      <p>{{ plan.description }}</p>
+      <div class="tiers">
+        <div *ngFor="let tier of plan.tiers" class="tier">
+          <strong>{{ tier.name }}</strong> - ${{ tier.monthlyPrice }}/month
+          <span *ngIf="tier.highlight" class="highlight">⭐ Popular</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

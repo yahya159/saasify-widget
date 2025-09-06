@@ -1,0 +1,126 @@
+<div class="properties-panel">
+  <div *ngIf="!selectedWidget()" class="no-selection">
+    <p>Select a widget to edit its properties</p>
+  </div>
+
+  <div *ngIf="selectedWidget() && !selectedBlock()" class="widget-properties">
+    <h4>Widget Properties</h4>
+    <form [formGroup]="widgetForm">
+      <div class="form-group">
+        <label for="widget-name">Widget Name</label>
+        <input 
+          id="widget-name"
+          type="text" 
+          formControlName="name" 
+          placeholder="Enter widget name"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="attached-plan">Attached Plan</label>
+        <select id="attached-plan" formControlName="attachedPlanId">
+          <option value="">No plan attached</option>
+          <option *ngFor="let plan of plans()" [value]="plan.id">
+            {{ plan.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="gap">Gap (px)</label>
+        <input 
+          id="gap"
+          type="number" 
+          formControlName="gap" 
+          min="0"
+          step="1"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="background">Background Color</label>
+        <input 
+          id="background"
+          type="color" 
+          formControlName="background"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="max-width">Max Width (px)</label>
+        <input 
+          id="max-width"
+          type="number" 
+          formControlName="maxWidth" 
+          min="100"
+          step="10"
+        >
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="selectedBlock()" class="block-properties">
+    <h4>Block Properties</h4>
+    <form [formGroup]="blockForm">
+      <div class="form-group">
+        <label for="block-text">Text Content</label>
+        <textarea 
+          id="block-text"
+          formControlName="text" 
+          placeholder="Enter text content"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div *ngIf="isPriceCardBlock() || isFeatureListBlock()" class="form-group">
+        <label for="plan-tier">Plan Tier</label>
+        <select id="plan-tier" formControlName="planTierId">
+          <option value="">Select a tier</option>
+          <option *ngFor="let tier of getAvailableTiers()" [value]="tier.id">
+            {{ tier.name }} - ${{ tier.monthlyPrice }}/month
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="text-align">Text Alignment</label>
+        <select id="text-align" formControlName="textAlign">
+          <option *ngFor="let option of getTextAlignOptions()" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="padding">Padding (px)</label>
+        <input 
+          id="padding"
+          type="number" 
+          formControlName="padding" 
+          min="0"
+          step="1"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="radius">Border Radius (px)</label>
+        <input 
+          id="radius"
+          type="number" 
+          formControlName="radius" 
+          min="0"
+          step="1"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="elevation">Elevation</label>
+        <select id="elevation" formControlName="elevation">
+          <option *ngFor="let option of getElevationOptions()" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+    </form>
+  </div>
+</div>
